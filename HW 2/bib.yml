@@ -1,0 +1,10 @@
+newton_divided_differences:
+    type: Web
+    title: Newton polynomial
+    url: https://en.wikipedia.org/wiki/Newton_polynomial
+
+
+neville_interpolation:
+    type: Web
+    title: Neville's algorithm
+    url: https://en.wikipedia.org/wiki/Neville%27s_algorithm
