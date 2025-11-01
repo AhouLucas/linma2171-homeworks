@@ -8,3 +8,14 @@ neville_interpolation:
     type: Web
     title: Neville's algorithm
     url: https://en.wikipedia.org/wiki/Neville%27s_algorithm
+
+
+floater_hormann_interpolation:
+    type: Article
+    title: Barycentric rational interpolation with no poles and high rates of approximation
+    author: ["Michael S. Floater", "Kai Hormann"]
+    page-range: 315-331
+    parent:
+        type: Periodical
+        title: Numerische Mathematik
+        volume: 107.2 (2007)
