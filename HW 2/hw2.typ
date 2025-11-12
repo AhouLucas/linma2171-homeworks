@@ -98,8 +98,7 @@ a) After implementing both methods in Python, let's plot the interpolation for $
 #figure(
   grid(
     columns: (auto, auto),
-    image("figures/Neville_f_1x.svg"),
-    image("figures/Newton_f_2x.svg"),
+z
   ),
   caption: [Neville and Newton's methods applied to $f_1$ and $f_2$ respectively for $n = 5, 10 "and" 15$]
 )<fig:q3.a_plot>
