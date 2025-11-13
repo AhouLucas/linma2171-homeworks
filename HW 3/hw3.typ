@@ -99,7 +99,7 @@ $
 $
 
 and where I omitted the time parameter in $x$ and $lambda$ for a more pleasant reading experience from the grader point of view.\
-I will now compute all the necessary derivatives, starting with $H_1$:
+Let's now compute all the necessary derivatives, starting with $H_1$:
 
 
 - $(partial H_1)/(partial x)$:\
@@ -156,3 +156,87 @@ To do that, we need an initial condition. We notice that taking $x(0) = p$ and $
 
 = Implementation
 
+== Question 1
+
+Here we have:
+
+$
+  g(x) = beta x_1^2 + x_2^2
+$
+
+Using the previously derived dynamical model and the parameters given in the statement, we obtain this system to solve:
+
+$
+  mat(2lambda(t)beta - 1, 0, 2beta x_1(t);
+      0, 2lambda(t) - 1, 2x_2(t);
+      2beta x_1(t), 2x_2(t), 0)
+  
+  mat(dot(x)_1(t);dot(x)_2(t); dot(lambda)(t))
+
+  =
+
+  mat(-1;-2lambda_0; 0)
+$
+
+We are also asked to plot $p + T_p cal(M)$. We know that:
+
+$
+  J_(g)(x) &= mat(2beta x_1, 2x_2)\
+  ==> J_(g)(p) &= mat(0, 2)
+$
+
+$T_p cal(M)$, which is the set of vectors which cancels $J_(g)(p)$, is thus:
+
+$
+  T_p cal(M) = "span" chevron.l mat(1;0) chevron.r
+$
+
+After solving the dynamical system using the given parameters, we obtain the following plot:
+
+#figure(
+  image("figures/q1_plot.svg", width:60%),
+  caption: [Trajectory $x(t)$, the smooth submanifold $cal(M)$ and the tangent space $T_p cal(M)$]
+)<q1_plot>
+
+On @q1_plot, we can see that the real part of $x(t)$ converges towards the closest point of $cal(M)$ to the vector $p + v$. We also notice that the imaginary part of $x(t)$ goes back to 0 at the final timestep. This indicates that the retraction was correctly computed.
+
+== Question 2
+
+We are now interested at the error of the solution. Let's thus analyze the norm of $H$: 
+
+#figure(
+  image("figures/q2_H_norms.svg", width:60%),
+  caption: [Errors of the approximation as a function of time for different $Delta  t$]
+)<q2_euler>
+
+On @q2_euler, even though the error seems to be very small for small $Delta t$,
+we actually have to decrease $Delta t$ by a considerable amount to achieve a small error. For $Delta t = 0.1$, we see that the error is too large to be considered a good approximation. For  $Delta t = 1e"-06"$, we get a pretty good approximation. However, the cost of computation becomes quite expensive.
+
+As suggested, let's add Newton correction steps into the previous algorithm. To do that, we will keep the Euler explicit method and at each time step, we take the new iterate and perform the Newton-Raphson method until we reach a tolerance of $epsilon.alt = 1e"-10"$. We then continue this loop with this new corrected iterate. Here is the plot of the errors for this new method:
+
+#figure(
+  image("figures/q2_H_norms_newton.svg", width:60%),
+  caption: [Error of the approximation for $Delta t = 0.1$]
+)<q2_newton>
+
+On @q2_newton, we reached a much smaller error at the final time step even though we used a large $Delta t$ of $0.1$. This allows to converge very quickly to the solution and with greater precision. I chose $Delta t = 0.1$ because choosing a smaller $Delta t$ gave an error of the same order of magnitude and is thus not necessary.
+
+== Question 3
+
+Let's now plot the trajectories of $lambda(t)$ depending on the initial condition $lambda_0$ for different $beta$:
+
+
+#figure(
+  grid(
+    columns: (auto, auto, auto),
+    image("figures/q3_lambda_trajectories_beta_0.5.svg"),
+    image("figures/q3_lambda_trajectories_beta_1.0.svg"),
+    image("figures/q3_lambda_trajectories_beta_5.0.svg"),
+  ),
+  caption: [Trajectories of $lambda(t)$ in the complex plane depending of the initial condition $lambda_0$ for different values of $beta$]
+)
+
+Here, we see that no matter the position of the initial condition or if it is real, they all converge to the same solution which is a valid valued for the retraction.
+
+
+#bibliography("bib.yml", full: true)
