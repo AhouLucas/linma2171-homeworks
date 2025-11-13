@@ -54,9 +54,9 @@ Let's now find an expression for the tangent space $T_x cal(M)$. If $x = 0$, the
 
 $ T_0 cal(M) = RR^n $
 
-Otherwise, because $B$ is positive definite, the only vector that can cancel it is the null vector:
+Otherwise:
 
-$ T_(x != 0) cal(M) = {0} $
+$ T_(x != 0) cal(M) = {v in RR^n : x^top B v = 0} $
 
 = Retraction with homotopy continuation
 
@@ -84,4 +84,75 @@ $
 Of course, the optimum also satisfies $g(x^*) = 0$ thus proving the statement.
 
 == Question 2
+
+We are given the system $H(x(t), lambda(t), t) = 0$ and are asked to give a dynamical system based on that. Let's differentiate the function with respect to $t$:
+
+$ (dif)/(dif t) H(x(t), lambda(t), t) = 0 $
+
+Let's denote $H = mat(H_1; H_2)$ where:
+
+$
+  cases(
+    H_1(x, lambda, t) = J_(g)(x)^top lambda - (1-t)J_(g)(p)^top lambda_0 + p + t v - x,
+    H_2(x, lambda, t) = g(x)
+  )
+$
+
+and where I omitted the time parameter in $x$ and $lambda$ for a more pleasant reading experience from the grader point of view.\
+I will now compute all the necessary derivatives, starting with $H_1$:
+
+
+- $(partial H_1)/(partial x)$:\
+
+  We know that:
+
+  $ J_(g)(x)^top lambda = mat((partial g_1)/(partial x_1), dots, (partial g_m)/(partial x_1); 
+                              dots.v, dots.down, dots.v;
+                              (partial g_1)/(partial x_n), dots, (partial g_m)/(partial x_n))
+                          
+                          mat(lambda_1; dots.v; lambda_m) =
+                          
+                          mat(sum_(k=1)^(m) lambda_k (partial g_k)/(partial x_1); dots.v; sum_(k=1)^(m) lambda_k (partial g_k)/(partial x_n)) $
+
+  Thus:
+
+  $ (partial)/(partial x)(J_(g)(x)^top lambda) = T(x, lambda) in RR^(n times n) $
+
+  where $[T(x, lambda)]_(i,j) = sum_(k=1)^(m) lambda_k (partial^2 g_k)/(partial x_i partial x_j)$. Finally: 
+
+  $ (partial H_1)/(partial x) = (partial)/(partial x)(J_(g)(x)^top lambda) - (partial x)/(partial x) = T(x, lambda) - I_n $
+
+- $(partial H_1)/(partial lambda) = J_(g)(x)^top$
+
+- $(partial H_1)/(partial t) = J_(g)(p)^top lambda_0 + v$
+
+Knowing that $(dif H_1)/(dif t) = (partial H_1)/(partial x) dot(x) + (partial H_1)/(partial lambda) dot(lambda) + (partial H_1)/(partial t) = 0 $, we obtain:
+
+$
+  (T(x, lambda) - I_n) dot(x) + J_(g)(x)^top dot(lambda) + J_(g)(p)^top lambda_0 + v = 0 quad ("Eq." 1)
+$
+
+Differentiating $H_2$ is straightforward and gives us:
+
+$ (dif H_2)/(dif t) = J_(g)(x) dot(x) = 0 quad ("Eq." 2) $
+
+We can now put everything in matrix form to get:
+
+
+$
+  mat(
+    T(x, lambda) - I_n, J_(g)(x)^top; J_(g)(x), 0
+  ) 
+  mat(dot(x); dot(lambda))
+
+  = 
+
+  mat(-J_(g)(p)^top lambda_0 - v; 0)
+$
+
+To find a solution $(x^*, lambda^*)$ to the original problem, we notice that $(x(t), lambda(t))$ is a solution of the original problem in this dynamical system when $t=1$. We can thus solve the dynamical system for $t in [0, 1]$ and look at the solution at $t=1$.\
+To do that, we need an initial condition. We notice that taking $x(0) = p$ and $lambda(0) = lambda_0$ satisfies the system for $t=0$. We can thus take those to simulate the system.
+
+
+= Implementation
 
