@@ -236,7 +236,7 @@ Let's now plot the trajectories of $lambda(t)$ depending on the initial conditio
   caption: [Trajectories of $lambda(t)$ in the complex plane depending of the initial condition $lambda_0$ for different values of $beta$]
 )
 
-Here, we see that no matter the position of the initial condition or if it is real, they all converge to the same solution which is a valid valued for the retraction.
+Here, we see that for $beta = 5$, all $lambda$ trajectories converge to the same point that has a non-zero imaginary part. This solution is thus not valid as the optimal Lagrange multiplier $lambda^*$ must be real.
 
 
 #bibliography("bib.yml", full: true)
