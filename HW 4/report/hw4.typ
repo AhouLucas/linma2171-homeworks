@@ -20,7 +20,8 @@
   margin: (x:7.5%)
 )
 
-#let ans-color = rgb(94, 181, 229, 50)
+// #let ans-color = rgb(94, 181, 229, 50)
+#let ans-color = rgb(200, 200, 200, 100)
 
 
 
@@ -28,7 +29,7 @@
 
 1. When $n > m$, prove that the discrete minimax problem admits infinitely many solutions.
 
-#answer(title: "Answer to Question 2.1", fill-header: ans-color)[
+#answer(title: "Answer", fill-header: ans-color)[
   If $n > m$, then $n+1 > m+1$. We have more degree of freedom ($n+1$) than data points. It is thus possible to interpolate $f$ at ${x_i}_(i=0)^(m)$ by a polynomial $p$ of degree $n$ such that the objective function is $0$. Furthermore, considering the polynomial:
 
   $ q(x) = product_(i=0)^(m) (x - x_i) in cal(P)_n $
@@ -42,7 +43,7 @@
 
 2. When $n = m$, prove that there exists exactly one solution.
 
-#answer(title: "Answer to Question 2.1", fill-header: ans-color)[
+#answer(title: "Answer", fill-header: ans-color)[
   The reasoning is similar to the previous case. However, when $n = m$, the polynomial which interpolates $f$ at ${x_i}_(i=0)^(m)$ is unique. To show that this polynomial is indeed the unique solution, let's consider any polynomial $q in cal(P)_n$ with $q != p$. Then, $exists x_i$ such that $q(x_i) != p(x_i)$. This implies that, at this $x_i$, $|f(x_i) - q(x_i)| > 0$ and thus :
 
   $ max_(i = 0, dots, m) |f(x_i) - q(x_i)| > 0 $
