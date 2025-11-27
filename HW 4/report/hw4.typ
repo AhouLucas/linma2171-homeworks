@@ -17,7 +17,7 @@
 
 
 #set page(
-  margin: (x:7.5%)
+  margin: (x:5%)
 )
 
 // #let ans-color = rgb(94, 181, 229, 50)
@@ -100,4 +100,72 @@ In this section, I will present the results of my implementation of the _Remez e
 
 #answer(title: "Answer", fill-header: ans-color)[
   $-->$ cfr. `run.py`
+]
+
+#v(1em)
+
+2.a) For fixed degrees $n in {2, 4, 8}$, plot the resulting minimax polynomial approximation $p_n$ for
+each function and each initialization strategy, together with the original function.
+
+#answer(title: "Answer", fill-header: ans-color)[
+  As stated in the question, I ran the implementation of the Remez exchange algorithm for $n in {2, 4, 8}$
+  for both functions to compare both initialization techniques:
+
+  #figure(
+    grid(
+      columns: (auto, auto),
+      image("../figures/approx_f1.svg", width: 90%),
+      image("../figures/approx_f2.svg", width: 90%)
+    ),
+    caption: [Minimax approximation for $f_1$ and $f_2$ using equidistant and Chebyshev points for different degrees]
+  )<fig:approx>
+  #v(.5em)
+  
+  On @fig:approx, we notice that, in every case, increasing the degree gives us a better approximation.
+]
+
+#answer(title: "Answer (cont.)", fill-header: ans-color)[
+  Furthermore, we notice that in the case of the first function, the approximation quickly becomes very close to the original function as the degree of the polynomial increases. This is not the case of the second function where we observe a quite huge approximation error even for $n = 8$. We also notice that, for $f_2$, the approximation of degree $2$ results in a linear function. This is likely due to the fact that the function is anti-symetric around 0.
+]
+
+#v(1em)
+
+2.b) Study the evolution of the minimax error as a function of the degree. For $n$ ranging over a larger set (e.g. $n = 4, 5, dots , 24$), compute and plot
+$ e(n) = ||f- p||_infinity $
+
+for both initialization strategies.
+
+#answer(title: "Answer", fill-header: ans-color)[
+  #figure(
+  grid(
+    columns: (auto, auto),
+    image("../figures/error_f1.svg", width: 90%),
+    image("../figures/error_f2.svg", width: 90%)
+  ),
+  caption: [Minimax approximation errors for $f_1$ and $f_2$ using equidistant and Chebyshev points as a function of the polynomial degrees]
+  )<fig:error>
+
+  #v(.5em)
+
+  On @fig:error, we notice that for both functions, the equidistant stratgy seems to be slightly better than the Chebyshev one, especially for $f_1$ where the former sometimes achieves a really small error even for smaller degrees. For $f_2$, both strategies seem to perform similarly. 
+]
+
+#pagebreak()
+
+2.c) Compare both approaches: which initialization works best, in terms of convergence (numberof Remez iterations) and final minimax error? Justify your claim with theoretical and/or numerical arguments.
+
+#answer(title: "Answer", fill-header: ans-color)[
+  As mentionned above, both initialization strategies share similar performances in terms of the final error. We will thus compare them based on the convergence to the optimal solution. Here is a plot of the number of iterations to obtain a convergence for both functions as a function of the degrees:
+
+  #figure(
+    grid(
+      columns: (auto, auto),
+      image("../figures/iterations_f1.svg", width: 90%),
+      image("../figures/iterations_f2.svg", width: 90%)
+    ),
+    caption: [Number of Remez iterations for $f_1$ and $f_2$ using equidistant and Chebyshev points as a function of the polynomial degrees]
+  )<fig:iterations>
+
+  #v(.5em)
+  On @fig:iterations, we notice that the Chebyshev initialization strategy consistently requires less iterations to converge to the optimal solution. This is especially true for $f_1$ where the difference can be quite significant for higher degrees. This behavior can be explained by the fact that we have a guaranteed bound with the Chebyshev interpolant (Th. 4.2.1 in the course notes), which is not the case with the equidistant points. Therefore, starting from a better initial guess allows the Remez algorithm to converge faster. Chebyshev initialization is thus slightly better in this context.
 ]

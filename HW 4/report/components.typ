@@ -31,14 +31,14 @@
   stack(
     block(
       width: 100%,
-      inset: (x: 0.4em, top: 0.35em, bottom: 0.45em),
+      inset: (x: .8em, top: 0.35em, bottom: 0.45em),
       fill: fill-header,
       radius: (top: radius, bottom: 0cm),
       header,
     ),
     block(
       width: 100%,
-      inset: (x: 0.4em, top: 0.35em, bottom: 0.45em),
+      inset: (x: .8em, top: 0.35em, bottom: 0.45em),
       fill: fill-body,
       radius: (top: 0cm, bottom: radius),
       content,
