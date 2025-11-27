@@ -15,6 +15,11 @@
   heading_numbering: none
 )
 
+
+#set page(
+  margin: (x:7.5%)
+)
+
 #let ans-color = rgb(94, 181, 229, 50)
 
 
@@ -82,4 +87,16 @@
   #v(1em)
 
   We have proven that $F$ is a continous and coercive function. Furthermore, we now that $RR^(n+1)$, the feasible set, is closed (because it is the whole space). We conclude that there exists an optimum which is also global. $square$
+]
+
+= Continuous minimax approximation
+
+In this section, I will present the results of my implementation of the _Remez exchange algorithm_ to solve the continuous minimax approximation. 
+
+#v(1em)
+
+1. Implement the Remez exchange algorithm for a given function $f : [a, b]-> RR$, a polynomial degree $n$, and a tolerance $epsilon > 0$. At each iteration, estimate $||f - p||_(infinity)$ by searching for the point where the absolute error is maximal.
+
+#answer(title: "Answer", fill-header: ans-color)[
+  $-->$ cfr. `run.py`
 ]
