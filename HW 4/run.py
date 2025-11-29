@@ -8,7 +8,7 @@
 
 # ### Imports
 
-# In[1]:
+# In[16]:
 
 
 import numpy as np
@@ -20,7 +20,7 @@ from numpy.polynomial import Polynomial
 
 # ### Continous minimax approximation
 
-# In[2]:
+# In[17]:
 
 
 # Phi_0 = 1, Phi_1 = x, ..., Phi_n = x**n
@@ -48,15 +48,9 @@ def solve_system(f, xi):
 
 def eta(f, p: Polynomial, interval=(-1, 1)):
     "Finds and returns the point at which the error is maximized"
-    def error_func(x):
-        return np.abs(f(x) - p(x))
-
-    res = sp.optimize.minimize_scalar(
-        lambda x: -error_func(x),
-        bounds=interval,
-        method='bounded'
-    )
-    return res.x
+    eval_points = np.linspace(interval[0], interval[1], 100000)
+    errors = f(eval_points) - p(eval_points)
+    return eval_points[np.argmax(np.abs(errors))]
 
 def replace_xi(f, p: Polynomial, xi, eta):
     "Returns the index of xi that is getting replaced by eta"
@@ -117,7 +111,7 @@ def remez_algorithm(f, xi_base, interval=(-1, 1), tol=1e-6, max_iter=1000):
 
 # ### Initialization strategies
 
-# In[3]:
+# In[18]:
 
 
 def eq_points(n):
@@ -132,7 +126,7 @@ def cheb_points(n):
 
 # ### 1. Approximations vs. $f(x)$
 
-# In[4]:
+# In[22]:
 
 
 def plot_approximations(f, interval=(-1, 1), f_label="", filename="f"):
@@ -148,6 +142,9 @@ def plot_approximations(f, interval=(-1, 1), f_label="", filename="f"):
     for n in [2, 4, 8]:
         xi_eq = eq_points(n)
         p_eq, _ = remez_algorithm(f, xi_eq, interval)
+
+        print(f"Equidistant n={n}, coeffs: {p_eq.coef}")
+
         ax1.plot(x, p_eq(x), label=f'n={n}', alpha=0.7)
     ax1.set_title(rf'Equidistant Initialization: $f(x) = {f_label}$')
     ax1.set_xlabel(r'$x$')
@@ -180,7 +177,7 @@ plot_approximations(f, f_label=r'\frac{1}{1 + e^{-10x}}', filename="f2")
 
 # ### 2. Minimax error vs. $n$
 
-# In[6]:
+# In[20]:
 
 
 def plot_errors(f, interval=(-1, 1), f_label="", filename="f"):
@@ -192,11 +189,11 @@ def plot_errors(f, interval=(-1, 1), f_label="", filename="f"):
 
     for n in ns:
         xi_eq = eq_points(n)
-        _, err_eq = remez_algorithm(f, xi_eq, interval)
+        _, err_eq = remez_algorithm(f, xi_eq, interval, tol=1e-4)
         errors_eq.append(err_eq[-1])
 
         xi_cheb = cheb_points(n)
-        _, err_cheb = remez_algorithm(f, xi_cheb, interval)
+        _, err_cheb = remez_algorithm(f, xi_cheb, interval, tol=1e-4)
         errors_cheb.append(err_cheb[-1])
 
     plt.figure(figsize=(10, 6))
@@ -219,7 +216,7 @@ f = lambda x: 1 / (1 + np.exp(-10 * x))
 plot_errors(f, f_label=r'\frac{1}{1 + e^{-10x}}', filename="f2")
 
 
-# In[8]:
+# In[21]:
 
 
 def plot_num_iter(f, interval=(-1, 1), f_label="", filename="f"):

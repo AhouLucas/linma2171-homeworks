@@ -125,7 +125,23 @@ each function and each initialization strategy, together with the original funct
 ]
 
 #answer(title: "Answer (cont.)", fill-header: ans-color)[
-  Furthermore, we notice that in the case of the first function, the approximation quickly becomes very close to the original function as the degree of the polynomial increases. This is not the case of the second function where we observe a quite huge approximation error even for $n = 8$. We also notice that, for $f_2$, the approximation of degree $2$ results in a linear function. This is likely due to the fact that the function is anti-symetric around 0.
+  Furthermore, we notice that in the case of the first function, the approximation quickly becomes very close to the original function as the degree of the polynomial increases. This is not the case of the second function where we observe a quite huge approximation error even for $n = 8$. We also notice that, for $f_2$, the approximation of degree $2$ results in a linear function. This is likely due to the fact that the function is anti-symetric around 0. All the terms of even order probably fall to $0$ for higher degrees as well. We confirm this by printing the coefficients (only for the equidistant case as an example):
+
+  #figure(
+    table(
+      columns: (auto, auto),
+      inset: 1em,
+      table.header([$n$], [Coefficients]),
+      [$2$], [$[ 5.00"e-"01,  7.39"e-"01, -3.52"e-"07]$],
+      [$4$], [$[ 4.99"e-"01,  1.36,  1.53"e-"06, -9.80"e-"01, -1.45"e-"06]$],
+      [$8$], [$[ 4.99"e-"01,  2.04,  1.13"e-"07, -5.96,\
+ -5.65"e-"07,  8.39,  1.02"e-"06, -4.00,
+ -5.68"e-"07]$]
+    ),
+    caption: [Coefficents (lowest to highest degree) of the polynomial approximation for $f_2$ for different $n$]
+  )<table:coeff>
+  #v(0.5em)
+  On @table:coeff, we clearly see that the coefficients associated with even orders are very small.
 ]
 
 #v(1em)
@@ -147,7 +163,7 @@ for both initialization strategies.
 
   #v(.5em)
 
-  On @fig:error, we notice that for both functions, the equidistant stratgy seems to be slightly better than the Chebyshev one, especially for $f_1$ where the former sometimes achieves a really small error even for smaller degrees. For $f_2$, both strategies seem to perform similarly. 
+  On @fig:error, we see that both strategies perform exactly in the same way which is expected. In fact, we have seen in the course that the polynomial obtained in the Remez algorithm solves the discrete minimax problem (cfr. course notes _"Optimality of p."_). We have also shown in the first part of this homework that there is a unique solution when we have $n = m$ (which is the case here). Both initializations must thus converge to the same solution, which is what we observe here. 
 ]
 
 #pagebreak()
